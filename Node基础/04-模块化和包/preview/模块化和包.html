@@ -1,0 +1,269 @@
+<html>
+  <head>
+	  <meta http-equiv="content-type" content="text/html; charset=utf-8" />
+    <title>i5ting_ztree_toc:模块化和包</title>
+		<link href="toc/style/github-bf51422f4bb36427d391e4b75a1daa083c2d840e.css" media="all" rel="stylesheet" type="text/css"/>
+		<link href="toc/style/github2-d731afd4f624c99a4b19ad69f3083cd6d02b81d5.css" media="all" rel="stylesheet" type="text/css"/>
+		<link href="toc/css/zTreeStyle/zTreeStyle.css" media="all" rel="stylesheet" type="text/css"/>
+	  <style>
+		pre {
+		    counter-reset: line-numbering;
+		    border: solid 1px #d9d9d9;
+		    border-radius: 0;
+		    background: #fff;
+		    padding: 0;
+		    line-height: 23px;
+		    margin-bottom: 30px;
+		    white-space: pre;
+		    overflow-x: auto;
+		    word-break: inherit;
+		    word-wrap: inherit;
+		}
+
+		pre a::before {
+		  content: counter(line-numbering);
+		  counter-increment: line-numbering;
+		  padding-right: 1em; /* space after numbers */
+		  width: 25px;
+		  text-align: right;
+		  opacity: 0.7;
+		  display: inline-block;
+		  color: #aaa;
+		  background: #eee;
+		  margin-right: 16px;
+		  padding: 2px 10px;
+		  font-size: 13px;
+		  -webkit-touch-callout: none;
+		  -webkit-user-select: none;
+		  -khtml-user-select: none;
+		  -moz-user-select: none;
+		  -ms-user-select: none;
+		  user-select: none;
+		}
+
+		pre a:first-of-type::before {
+		  padding-top: 10px;
+		}
+
+		pre a:last-of-type::before {
+		  padding-bottom: 10px;
+		}
+
+		pre a:only-of-type::before {
+		  padding: 10px;
+		}
+
+		.highlight { background-color: #ffffcc } /* RIGHT */
+		</style>
+  </head>
+  <body>
+	  <div>
+				<div style='width:25%;'>
+						<ul id="tree" class="ztree" style='width:100%'>
+
+						</ul>
+				</div>
+        <div id='readme' style='width:70%;margin-left:20%;'>
+          	<article class='markdown-body'>
+            	<h1 id="-">模块化</h1>
+<h2 id="-">一. 认识模块化</h2>
+<blockquote>
+<p>模块化就是一种约定，一种规范；</p>
+<p>场景模拟：小强，小黄，小刚 共同基于 Node.js 开发项目！</p>
+</blockquote>
+<ol>
+<li>为什么要有模块化：<strong>为了解决文件之间的依赖关系</strong>；</li>
+<li>注意：<strong>模块化是一种开发思想</strong>；具体开发中需要定制符合实际需求的<strong>模块化规范</strong>！</li>
+<li>大家可以把模块化规范，认为是一种<strong>明文的约定</strong>，大家都按照相同的约定写代码，减少了不必要的沟通成本，极大方便了各个模块之间的调用，方便别人，同时也方便自己；</li>
+</ol>
+<h2 id="-commonjs-">二. 了解CommonJs规范</h2>
+<ol>
+<li>作用：是一套 Javascript 的模块化规范，规定了 <strong>模块的特性</strong> 和 <strong>各模块之间如何相互依赖</strong>；</li>
+<li>用途：Node.js 中使用了 CommonJS 规范；</li>
+<li>特点：<strong>同步加载模块；</strong> 不适合在浏览器端使用；</li>
+<li>CommonJS规范都定义了哪些内容：<a href="http://wiki.commonjs.org/wiki/Modules/1.1">wiki 对于 Modules 的描述</a></li>
+</ol>
+<h2 id="-">三. 模块作用域 和 全局作用域</h2>
+<blockquote>
+<p>在Node.js中有两个作用域，分别是 全局作用域 和 模块作用域；</p>
+</blockquote>
+<ol>
+<li>全局作用域使用 <code>global</code> 来访问，类似于<code>浏览器中的window</code>；</li>
+<li>每个 Javascript 文件，都是一个单独模块，每个模块都有自己独立的作用域，因此：模块中的成员，默认无法被其它模块访问。</li>
+</ol>
+<h3 id="3-1-global-">3.1 使用 global 全局作用域在模块之间共享成员</h3>
+<ol>
+<li>如果在某个模块内部，想为 全局的 global 作用域挂载一些属性，需要显示的调用<code>global.***</code>来挂载；</li>
+<li>注意：在开发中，一般情况下，不推荐使用<code>global</code>全局作用域来共享成员，会存在全局变量污染问题；</li>
+</ol>
+<h3 id="3-2-">3.2 模块作用域</h3>
+<ol>
+<li><p><strong>module（模块标识）</strong></p>
+<p>module 属性是 Common JS 规范中定义的，它是一个对象，表示当前这个具体的 js 模块；</p>
+</li>
+<li><p><strong>require（引用模块）</strong></p>
+<p>每一个实现了 CommonJS 规范的模块，必须定义一个 require() 函数，使用这个 require 函数，就能够 很方便的导入其它 模块中的成员，供自己使用；</p>
+</li>
+<li><p><strong>exports（暴露模块成员）</strong></p>
+<p>每一个模块中，如果想要把自己的一些私有成员，暴露给别人使用，那么，必须实现一个 exports 对象，通过exports对象，可以方便的把模块内私有的成员，暴露给外界使用；</p>
+</li>
+</ol>
+<h3 id="3-3-module-exports-exports-">3.3 module.exports 和 exports 的关系</h3>
+<ol>
+<li><code>module.exports</code> 和 <code>exports</code> 默认引用了同一个空对象；</li>
+<li><code>module.exports</code> 和 <code>exports</code> 作用一致，都可以向外暴露成员；</li>
+<li>一个模块作用域中，向外暴露私有成员时，永远以 <code>module.exports</code> 为准；</li>
+</ol>
+<h2 id="-amd-cmd-">四. 了解 - 浏览器端的 AMD 和 CMD 模块化规范</h2>
+<blockquote>
+<p>注意：浏览器端不能使用 CommonJS规范；因为 CommonJS 下，模块是同步加载的；</p>
+</blockquote>
+<blockquote>
+<p>AMD/CMD可以理解为是commonjs在浏览器端的解决方案，AMD/CMD下，模块都是异步加载的；</p>
+</blockquote>
+<ol>
+<li>AMD模块化规范代表：RequireJS<ul>
+<li>主要特性1：对于依赖的模块，AMD 是提前执行；</li>
+<li>主要特性2：推崇<strong>依赖前置</strong>；</li>
+</ul>
+</li>
+<li>CMD模块化规范代表：SeaJS<ul>
+<li>主要特性1：对于依赖的模块，CMD 是延迟执行；CMD 推崇 as lazy as possible.</li>
+<li>主要特性2：推崇<strong>依赖就近</strong>；</li>
+</ul>
+</li>
+<li>ES6的模块化（<strong>大趋势</strong>）：es6是在<strong>语言标准层面上</strong>，实现了模块功能，而且实现得相当简单，<strong>完全可以取代 CommonJS 和 AMD 规范，成为浏览器和服务器通用的模块解决方案</strong>；</li>
+</ol>
+<h2 id="-nodejs-">五. nodeJs中的模块和包的概念</h2>
+<h3 id="5-1-">5.1 模块</h3>
+<h4 id="-">模块分类</h4>
+<pre><code>模块成员，根据一些区别，又可以分为三大类： 核心模块、第三方模块、用户自定义模块
+</code></pre><h4 id="-">核心模块</h4>
+<ol>
+<li><strong>什么是核心模块：</strong><ul>
+<li>随着Node.js的安装包，一同安装到本地的模块，叫做核心模块；</li>
+<li>例如：<code>fs</code>，<code>path</code>等模块，都是由Node.js官方提供的核心模块；</li>
+<li>只要大家在计算机中，安装了Node这个应用程序，那么，我们的计算机中就已经安装了所有的 核心模块；</li>
+</ul>
+</li>
+<li><strong>如何使用核心模块</strong>：<code>require(&#39;核心模块标识符&#39;)</code></li>
+</ol>
+<h4 id="-">第三方模块</h4>
+<ol>
+<li><strong>什么是第三方模块：</strong><ul>
+<li>一些非官方提供的模块，叫做第三方模块；</li>
+<li>注意，第三方模块，并不在我们的计算机上；</li>
+<li>如果大家需要使用某些第三方模块，必须去一个叫做 <code>NPM</code> 的网站上搜索并下载才能使用；</li>
+</ul>
+</li>
+<li><strong>如何使用第三方模块：</strong><ul>
+<li>先从 npm 官网上下载指定的第三方模块</li>
+<li>使用 <code>require(&#39;第三方模块的名称标识符&#39;)</code>来导入这个模块</li>
+<li>根据 第三方模块的 官方文档，尝试使用</li>
+</ul>
+</li>
+</ol>
+<h4 id="-">自定义模块</h4>
+<ol>
+<li><strong>什么是用户模块：</strong><ul>
+<li>程序员在自己项目中写的 Javascript 文件，就叫做 用户自定义模块；</li>
+</ul>
+</li>
+<li><strong>如何使用用户模块：</strong><code>require(&#39;路径标识符&#39;)</code></li>
+</ol>
+<p>###5.2 包</p>
+<h4 id="5-2-1-">5.2.1 什么是包</h4>
+<ol>
+<li>英文名叫做 <code>Packages</code>，包是在模块基础上更深一步的抽象；</li>
+<li>包的目的：方便分发和推广基于 CommonJS 规范实现的 应用程序 或 类库；</li>
+<li>包可以看作是 <strong>模块</strong>、<strong>代码</strong> 和 <strong>其它资源</strong> 组合起来形成的 独立作用域；</li>
+</ol>
+<h4 id="5-2-2-">5.2.2 包的规范结构</h4>
+<ol>
+<li><strong>包都要以一个单独的目录而存在</strong>；</li>
+<li><strong><code>package.json</code> 必须在包的顶层目录下</strong>；</li>
+<li><strong><code>package.json</code> 文件必须符合 JSON 格式，并且必须包含如下三个属性：<code>name</code>, <code>version</code>, <code>main</code></strong><ul>
+<li><strong>name</strong>:  包的名字</li>
+<li><strong>version</strong>: 包的版本号</li>
+<li><strong>main</strong>: 表示包的入口文件</li>
+</ul>
+</li>
+<li>二进制文件应该在<strong>bin目录</strong>下;</li>
+<li>javaScript代码应该在<strong>lib目录</strong>下;</li>
+<li>文档应该在<strong>doc目录</strong>下;</li>
+<li>单元测试应该在<strong>test目录</strong>下;</li>
+<li>Node.js对包要求并没有那么严格，只要顶层目录下有<code>package.json</code>，并<strong>符合基本规范</strong>即可;</li>
+</ol>
+<h4 id="5-3-3-package-json">5.3.3 包描述文件package.json</h4>
+<pre><code>name：包的名称，必须是唯一
+description：包的简要说明
+version：符合语义化版本识别规范的版本字符串
+keywords：关键字数据，通常用于搜索
+maintainers：维护者数组，每个元素要包含name、email、web可选字段
+contributors：贡献者数组，格式与maintainers相同。包的坐着应该是贡献者数据的第一个元素
+bugs：提交bug的地址，可以是网址或者电子邮件地址
+licenses：许可证数组，每个元素要包含type和url字段
+repositories：仓库托管地址数组，每个元素要包含type、url和path字段
+dependencies：包的依赖，一个关联数组，由包名称和版本号组成。
+devDependencies：开发依赖项，表示一个包在开发期间用到的依赖项
+</code></pre><h4 id="-">案例：自己封装一个包含 加减乘除 的包</h4>
+<h2 id="-npm">六 npm</h2>
+<h3 id="6-1-npm-">6.1 npm的两层含义</h3>
+<ol>
+<li>NPM 是一个 第三方模块的托管网站，指的就是<code>https://www.npmjs.com/</code>；</li>
+<li>NPM 是Node的包管理工具（全名叫做  Node package manager），在我们安装Node时候，就已经顺便也安装了 NPM 这个管理工具；</li>
+</ol>
+<h3 id="6-2-">6.2 安装和卸载全局包</h3>
+<ol>
+<li><strong>什么是全局的包：</strong>安装到计算机全局环境中的包，叫做全局包；安装的全局包可以在当前电脑的任何目录下，直接通过命令行来访问；</li>
+<li><strong>如何安装全局包：</strong>运行 <code>npm install 包名 -g</code> 即可；其中 <code>-g</code> 参数，表示 把包安装到全局目录中的意思；</li>
+<li><strong>全局包的安装目录：</strong><code>C:\Users\用户目录\AppData\Roaming\npm</code></li>
+<li><strong>什么样的包适合安装到全局：</strong>工具性质的包，适合安装到全局；</li>
+<li><strong>如何卸载全局包：</strong>要卸载某个全局的包，直接运行<code>npm uninstall 包名 -g</code>即可；其中 <code>uninstall</code> 表示卸载的意思；</li>
+<li><strong>npm遇到write access的问题怎么办？</strong><ul>
+<li>参考：<a href="https://www.jianshu.com/p/31744aa44824">解决方案</a></li>
+</ul>
+</li>
+</ol>
+<h3 id="6-3-">6.3 安装和卸载本地包</h3>
+<ol>
+<li><strong>什么是本地的包：</strong>跟着项目安装的包，叫做本地包；本地包都会被安装到 node_modules 目录下；</li>
+<li><strong>注意：</strong>如果拿到一个空项目，<strong>必须</strong>在当前项目根目录中，先运行 <code>npm init</code>或者<code>npm init -y</code> 命令，初始化一个<code>package.json</code>的配置文件，否则包无法安装到本地项目中；</li>
+<li><strong>如何安装本地包：</strong>运行<code>npm i 包名 --save</code> 即可安装本地包；都安装到了当前项目的 <code>node_modules</code>目录下；<ul>
+<li>如果大家用的是npm 5.x的版本，可以不指定<code>--save</code>命令，如果用的是 npm 3.x 的版本，则需要手动指定 <code>--save</code>；</li>
+</ul>
+</li>
+<li><code>package-lock.json</code>文件中记录了曾经装过的包的下载地址，方便下次直接下载包，能够加快装包的速度，提升装包的体验；</li>
+<li><strong>如何卸载本地包：</strong>使用 <code>npm uninstall/remove 包名 -S/-D</code>即可卸载指定的本地包；</li>
+</ol>
+<h3 id="6-4-">6.4 其他常用命令</h3>
+<ol>
+<li><code>--save</code> 的缩写是 <code>-S</code></li>
+<li><code>--save-dev</code>的缩写是 <code>-D</code></li>
+<li><code>install</code> 的缩写是 <code>i</code></li>
+<li>注意：<code>dependencies</code> 节点，表示项目上线部署时候需要的依赖项；<code>devDependencies</code>节点，表示项目在开发阶段需要的依赖项，但是当项目要部署上线了，<code>devDependencies</code>节点中的包，就不再需要了！</li>
+<li>注意：当使用 <code>npm i</code>快速装包的时候，npm会检查<code>package.json</code>文件中，所有的依赖项，然后都为我们安装到项目中</li>
+<li><code>--production</code> 表示只安装 <code>dependencies</code> 节点下，记录的包，不安装<code>devDependencies</code>节点下的包；当项目要上线了，才会使用<code>--production</code>命令</li>
+</ol>
+
+          	</article>
+        </div>
+		</div>
+  </body>
+</html>
+<script type="text/javascript" src="toc/js/jquery-1.4.4.min.js"></script>
+<script type="text/javascript" src="toc/js/jquery.ztree.all-3.5.min.js"></script>
+<script type="text/javascript" src="toc/js/ztree_toc.js"></script>
+<script type="text/javascript" src="toc_conf.js"></script>
+
+<SCRIPT type="text/javascript" >
+<!--
+$(document).ready(function(){
+    var css_conf = eval(markdown_panel_style);
+    $('#readme').css(css_conf)
+    
+    var conf = eval(jquery_ztree_toc_opts);
+		$('#tree').ztree_toc(conf);
+});
+//-->
+</SCRIPT>
