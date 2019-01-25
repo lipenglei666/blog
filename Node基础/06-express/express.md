@@ -63,3 +63,75 @@
 
 
 
+### 2.5 为 express 框架配置模板引擎渲染动态页面
+
+1. 安装 ejs 模板引擎` npm i ejs -S`
+2. 使用 app.set() 配置默认的模板引擎 `app.set('view engine', 'ejs')`
+3. 使用 app.set() 配置默认模板页面的存放路径 `app.set('views', './views')`
+4. 使用 res.render() 来渲染模板页面`res.render('index.ejs', { 要渲染的数据对象 })`，注意，模板页面的 后缀名，可以省略不写！
+
+### 2.6 在 express 中配置 art-template
+
+1. 安装 两个包 `cnpm i art-template express-art-template -S`
+2. 自定义一个模板引擎  `app.engine('自定义模板引擎的名称', 渲染函数)`
+3. 将自定义的模板引擎，配置为 express 的默认模板引擎  `app.set('view engine', '具体模板引擎的名称')`
+4. 配置 模板页面得存放路径 `app.set('views', '路径')`
+
+
+
+## 3. 使用 express 框架中提供的路由来分发请求
+
+1. **什么是路由：** 路由就是对应关系；
+2. **什么叫做后端路由：** 前端请求的URL地址，都要对应一个后端的处理函数，那么 这种URL地址到 处理函数之间的对应关系，就叫做后端路由；
+3. 在Express中，**路由的主要职责**  就是 **把请求分发到对应的处理函数中**；
+4. 在Express中，如何 定义并使用路由呢？
+
+```js
+  // 1. 封装单独的 router.js 路由模块文件
+  const express = require('express')
+  // 创建路由对象
+  const router = express.Router()
+
+  router.get('/', (req, res)=>{})
+  router.get('/movie', (req, res)=>{})
+  router.get('/about', (req, res)=>{})
+
+  // 导出路由对象
+  module.exports = router
+```
+
+5. express 创建的 app 服务器，如何使用 路由模块呢？
+
+```js
+  // 导入自己的路由模块
+  const router = require('./router.js')
+  // 使用 app.use() 来注册路由
+  app.use(router)
+```
+
+
+
+## 4. Express框架里中间件概念
+
+### 4.1 什么是中间件
+
+> 定义：中间件就是一个处理函数；只不过这个函数比较特殊，包含了三个参数，分别是 `req`，`res`，`next`
+>
+> 注意：中间件方法中的三个参数：
+>
+> - req：请求对象；
+> - res：响应对象；
+> - next：next()可以被调用，表示调用下一个中间件方法；
+
+### 4.2 Express 框架中对中间件的5种分类
+
+1. **应用级别的中间件：** 挂载到 app 上的中间件 `app.get('URL地址', （req, res, next）=> {})`；
+2. **路由级别的中间件：** 挂载到 router 对象上的中间件  `router.get('url地址', (req, res, next)=>{})`
+3. **错误级别的中间件：** 回调函数中，有四个参数 `app.use((err, req, res, next)=>{})`
+4. **唯一内置的中间件：** `express.static()`
+5. **第三方中间件：** 非express框架提供的，需要程序员手动安装才能使用的中间件；`body-parser` 解析post 表单数据
+
+> 中间件的概念，了解即可，因为实际开发中，我们都直接使用第三方现成的中间件；
+
+### 4.3 模拟一个解析表单数据的中间件
+
