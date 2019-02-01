@@ -17,27 +17,6 @@ var connection = mysql.createConnection({
 connection.connect();
 ```
 
-## 3.查询操作
-``` connection.query(sqlStr,(err,res){})```
-
-## 4.插入操作
-```
-connection.query(sqlStr,values,(err.res){});
-// values 传入一个对象
-```
-
-## 4.插入操作
-```
-connection.query(sqlStr,values,(err.res){})
-// values 传入[对象,条件1，条件2...]
-```
-
-### 删除操作
-```
-connection.query(sqlStr,values,(err.res){})
-// values 传入id值
-```
-
 
 
 
