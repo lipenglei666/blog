@@ -1,0 +1,14 @@
+<%- include('../layout/header.ejs')%>
+<div class="container">
+    <h1>
+        <%= data.title %>
+        <!-- 权限是否显示编辑按钮 -->
+        <% if(islogin&&user.id==data.authorId){ %>
+            <a href="/article/edit/<%=data.id%>" class="btn btn-info pull-right">编辑</a>
+        <%}%>
+        
+    </h1>
+    <hr>
+    <%- data.content %>
+</div>
+<%- include('../layout/footer.ejs')%>

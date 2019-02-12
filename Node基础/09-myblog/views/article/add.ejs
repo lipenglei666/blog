@@ -1,0 +1,53 @@
+<%- include('../layout/header.ejs')%>
+<link rel="stylesheet" href="/node_modules/mditor/dist/css/mditor.min.css">
+<script src="/node_modules/mditor/dist/js/mditor.min.js"></script>
+<!-- 标题 -->
+<h1 class="text-center">发表文章</h1>
+<br>
+<!-- 表单-->
+<div class="container">
+    <form class="form-horizontal" id="article">
+        <input type="hidden" value="<%=user.id%>" name="authorId">
+        <!-- 标题 -->
+        <div class="form-group">
+            <label for="title">标题:</label>
+            <input type="text" name="title" class="form-control" id="title" placeholder="文章标题">
+
+        </div>
+        <!-- 文本域 -->
+        <div class="form-group">
+            <label for="title">文章内容:</label>
+            <textarea name="content" id="editor" class="form-control"></textarea>
+        </div>
+
+        <input type="submit" class="btn btn-success" value="发表">
+
+    </form>
+</div>
+<script>
+    $(function(){
+        // 初始化编辑器
+        var mditor =  Mditor.fromTextarea(document.getElementById('editor'));
+        // 点击按钮发表文章
+        $('#article').on('submit',function(){
+            // 发送ajax
+            $.ajax({
+                url:'/addArticle',
+                type:'post',
+                data:$('#article').serialize(),
+                dataType:'json',
+                success:function(result){
+                    if(result.status) {
+                        alert('发表成功');
+                        location.href='/articleInfo/' + result.articleId;
+                    }else {
+                        alert('发表失败');
+                    }
+                }
+            });
+            return false;
+        });
+
+    });
+</script>
+<%- include('../layout/footer.ejs')%>

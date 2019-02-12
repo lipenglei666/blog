@@ -1,0 +1,50 @@
+<%- include('../layout/header.ejs')%>
+<link rel="stylesheet" href="/node_modules/mditor/dist/css/mditor.min.css">
+<script src="/node_modules/mditor/dist/js/mditor.min.js"></script>
+<!-- 标题 -->
+<h1 class="text-center">编辑文章</h1>
+<br>
+<!-- 表单-->
+<div class="container">
+    <form class="form-horizontal" id="article">
+        <!-- 标题 -->
+        <div class="form-group">
+            <label for="title">标题:</label>
+            <input value="<%=data.title%>" type="text" name="title" class="form-control" id="title" placeholder="文章标题">
+
+        </div>
+        <!-- 文本域 -->
+        <div class="form-group">
+            <label for="title">文章内容:</label>
+            <textarea name="content" id="editor"  class="form-control"><%=data.content%></textarea>
+        </div>
+
+        <input type="submit" class="btn btn-success" value="保存">
+
+    </form>
+</div>
+<script>
+    $(function(){
+        // 初始化编辑器
+        var mditor =  Mditor.fromTextarea(document.getElementById('editor'));
+        // 保存功能
+        $('#article').on('submit',function(){
+            $.ajax({
+                url:'/save/<%=data.id%>',
+                type:'post',
+                data:$('#article').serialize(),
+                dataType:'json',
+                success:function(data){
+                    console.log(data);
+                    if(data.status==200) {
+                        alert('保存成功');
+                        location.href = '/articleInfo/<%=data.id%>'
+                    }
+                }
+            });
+            return false;
+        });
+        
+    });
+</script>
+<%- include('../layout/footer.ejs')%>

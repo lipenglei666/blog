@@ -1,70 +1,41 @@
-<!DOCTYPE html>
-<html lang="en">
-
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>首页</title>
-    <!-- 引入boostrap样式文件 -->
-    <link rel="stylesheet" href="/node_modules/_bootstrap@3.3.7@bootstrap/dist/css/bootstrap.css">
-    <!-- 引入jquery文件 -->
-    <script src="/node_modules/jquery/dist/jquery.js"></script>
-    <!-- 引入boostrap脚本文件 -->
-    <script src="/node_modules/_bootstrap@3.3.7@bootstrap/dist/js/bootstrap.js"></script>
-</head>
-
-<body>
-    <!-- 导航 S-->
-    <nav class="navbar navbar-default">
-        <div class="container-fluid">
-            <!-- Brand and toggle get grouped for better mobile display -->
-            <div class="navbar-header">
-                <a class="navbar-brand" href="#">我的博客</a>
-            </div>
-
-            <!-- Collect the nav links, forms, and other content for toggling -->
-            <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
-                <!-- 注册和登录按钮 -->
-                <div class="nav navbar-nav navbar-right navbar-form">
-                    <button class="btn btn-success">注册</button>
-                    <button class="btn btn-primary">登录</button>
-                </div>
-                <div class="nav navbar-nav navbar-right navbar-form">
-                    <button class="btn btn-warning">欢迎***</button>
-                    <button class="btn btn-danger">注销</button>
-                </div>
-
-                <!-- 文章 -->
-                <ul class="nav navbar-nav navbar-right">
-                    <li class="dropdown">
-                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true"
-                            aria-expanded="false">文章 <span class="caret"></span></a>
-                        <ul class="dropdown-menu">
-                            <li><a href="javascript:">发表</a></li>
-                            <li><a href="javascript:">问题</a></li>
-
-                        </ul>
-                    </li>
-                </ul>
-
-
-
-
-
-
-            </div>
-        </div>
+<%- include('./layout/header.ejs')%>
+<!-- 标题 -->
+<h1 class="text-center">文章列表</h1>
+<div class="container">
+    <!-- 列表 -->
+    <ul class="list-group">
+        <%for(var i = 0; i < data.length; i++){%>
+        <li class="list-group-item">
+            <span style="background:#f0ad4e" class="badge">
+                <%=data[i].nickname%>
+            </span>
+            <span style="background:#337ab7" class="badge">
+                <%=data[i].ctime%>
+            </span>
+            <a href="/articleInfo/<%=data[i].id%>">
+                <%=data[i].title%>
+            </a>
+        </li>
+        <%}%>
+    </ul>
+    <!-- 分页 -->
+    <nav aria-label="...">
+        <ul class="pagination">
+            <li class="<%=pageNow-1<1?'disabled':''%>">
+                <<%=pageNow-1<1?'span':'a'%> href="/?page=<%=pageNow-1<1?1:pageNow-1%>" aria-label="Previous">
+                    <span>&laquo;</span>
+                </<%=pageNow-1<1?'span':'a'%> >
+            </li>
+            <%for(var i = 1; i <= totalPage;i++){%>
+        <li class="<%=i==pageNow?'active':''%>"><a href="/?page=<%=i%>"><%=i%></a></li>
+        <%}%>
+        <li class="<%=pageNow+1>totalPage?'disabled':''%>">
+                    <<%=pageNow+1>totalPage?'span':'a'%> href="/?page=<%=pageNow+1>totalPage?totalPage:pageNow+1%>" aria-label="Previous">
+                        <span>»</span>
+                    </<%=pageNow+1>totalPage?'span':'a'%>>
+                </li>
+        </ul>
     </nav>
-    <!-- 导航 E-->
+</div>
 
-    <!-- 标题 -->
-    <h1 class="text-center">文章列表</h1>
-
-    <!-- 版权信息 S -->
-    <p class="text-muted text-center">大道前端©️李鹏雷 2018</p>
-    <!-- 版权信息 E -->
-
-</body>
-
-</html>
+<%- include('./layout/footer.ejs')%>
