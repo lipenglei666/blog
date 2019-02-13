@@ -185,24 +185,24 @@
 
 
 
-## 7. Inner join 的使用
+## 7. Left join 的使用
 
 + 语法
 
   ```mysql
   select <select_list> from 表1
-  inner join
+  left join
   表2
-  where 表1.key = 表2.key
+  on 表1.key = 表2.key
   ```
 
 + SQL语句
 
   ```mysql
-  select username,age,math from student
-  inner join
+  select * from student
+  left join
   score
-  where score.stuId = student.stuId
+  on score.stuId = student.stuId
   order by age
   ```
 
@@ -227,5 +227,23 @@
   select * from student order by age desc -- 降序
   
   ```
+
+
+
+## 9. limit 
+
+```sql
+-- limit是mysql的语法
+select * from table limit m,n
+-- 其中m是指记录开始的index，从0开始，表示第一条记录
+-- n是指从第m+1条开始，取n条。
+select * from tablename limit 2,4
+-- 即取出第3条至第6条，4条记录
+```
+
+
+
+分页公式：(pagenow-1) * pagesize
+
 
 
