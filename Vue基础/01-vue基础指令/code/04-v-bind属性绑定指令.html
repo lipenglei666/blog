@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8">
+    <title>Document</title>
+  </head>
+  <body>
+    <div id="app">
+      <img :title="t" v-bind:src="bsrc"  alt="">
+    </div>
+    <script src="lib/vue-2.5.16.js"></script>
+    <script>
+      var vm = new Vue({
+        el:'#app',
+        data:{
+          bsrc:'https://ss0.bdstatic.com/70cFuHSh_Q1YnxGkpoWK1HF6hhy/it/u=3117908224,2803765654&fm=27&gp=0.jpg',
+          t:'大长腿'
+        }
+      })
+      // v-bind:attr="value"  属性绑定指令
+      // 简写： :attr="value"
+    </script>
+  </body>
+</html>

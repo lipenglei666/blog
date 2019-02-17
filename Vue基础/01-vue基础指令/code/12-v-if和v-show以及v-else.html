@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8">
+    <title>Document</title>
+  </head>
+  <body>
+    <div id="app">
+      <button @click="flag=!flag">切换</button>
+      <!-- 
+        v-if="布尔值"，是则动态创建显示元素，否则动态移除元素
+        v-else 和v-if配合使用
+        v-show="布尔值"，是则显示元素，否则隐藏元素
+       -->
+      <h1 v-if="flag">标题❤️</h1>
+      <h1 v-else>标题🔪</h1>
+      <h2 v-show="flag">标题2</h2>
+    </div>
+
+    <script src="lib/vue-2.5.16.js"></script>
+    <script>
+      var vm = new Vue({
+        el:"#app",
+        data:{
+          flag:true
+        }
+      })
+    </script>
+  </body>
+</html>

@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8">
+    <title>Document</title>
+    <style>
+      html,body,#app {
+        margin: 0;
+        padding: 0;
+        width: 100%;
+        height: 100%;
+        background: #000;
+      }
+      .light {
+        background: #fff !important;
+      }
+
+    </style>
+  </head>
+  <body>
+    <div id="app" :class="[flag?'light':'']">
+      <button @click="flag=!flag">开关灯</button>
+    </div>
+
+    <script src="lib/vue-2.5.16.js"></script>
+    <script>
+      var vm = new Vue({
+        el:"#app",
+        data:{
+          flag:true
+        }
+      })
+    </script>
+  </body>
+</html>

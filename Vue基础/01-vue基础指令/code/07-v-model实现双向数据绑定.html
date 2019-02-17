@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8">
+    <title>Document</title>
+  </head>
+  <body>
+    <div id="app">
+      <p>文本内容：{{msg}}</p>
+      <p>文本长度：{{msg.length}}</p>
+      <!-- 
+        v-mode:attr="value" 双向数据绑定
+       -->
+      <input type="text" v-model:value="msg">
+    </div>
+
+    <script src="lib/vue-2.5.16.js"></script>
+    <script>
+      var vm = new Vue({
+        el:"#app",
+        data:{
+          msg:'张三'
+        }
+      })
+    </script>
+  </body>
+</html>

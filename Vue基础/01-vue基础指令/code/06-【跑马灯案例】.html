@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8">
+    <title>Document</title>
+    <style>
+      h2 {
+        display: inline-block;
+        background: #000;
+        color:gold;
+      }
+    </style>
+  </head>
+  <body>
+    <div id="app">
+      <button @click="start">开始</button>
+      <button @click="stop">停止</button>
+      <br>
+      <h2>{{msg}}</h2>
+    </div>
+
+    <script src="lib/vue-2.5.16.js"></script>
+    <script>
+      var vm = new Vue({
+        el:"#app",
+        data:{
+          msg:'2019，恭喜发财，诸事顺利。',
+          timer:null
+        },
+        methods:{
+          start(){
+            if(this.timer!=null) return;
+            // this代表当前vue实例对象
+            this.timer =setInterval(()=>{
+              this.msg = this.msg.slice(1) + this.msg.slice(0,1);
+            },100);
+          },
+          stop(){
+            clearInterval(this.timer);
+            console.log(this.timer);
+            this.timer = null;
+          },
+        }
+      })
+    </script>
+  </body>
+</html>

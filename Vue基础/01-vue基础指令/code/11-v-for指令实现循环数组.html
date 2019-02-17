@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8">
+    <title>Document</title>
+  </head>
+  <body>
+    <div id="app">
+      <input type="text" v-model:value="name">
+      <button @click="add">添加英雄</button>
+      <ul>
+        <!-- 
+          v-for = "(item,index) in obj"
+          :key="唯一标识"，保证结构和数据的对应关系
+         -->
+        <li v-for="(item,index) in heros" :key="item.id">
+          <input type="checkbox">
+          id:{{item.id}}--name:{{item.name}}
+        </li>
+      </ul>
+    </div>
+
+    <script src="lib/vue-2.5.16.js"></script>
+    <script>
+      var vm = new Vue({
+        el:"#app",
+        data:{
+          name:'',
+          heros:[
+            {id:1,name:'后裔'},
+            {id:2,name:'李白'},
+            {id:3,name:'鲁班'},
+            {id:4,name:'曹操'}
+          ]
+        },
+        methods:{
+          add(){
+            this.heros.push({id:this.heros.length,name:this.name});
+          }
+        }
+
+      })
+    </script>
+  </body>
+</html>
