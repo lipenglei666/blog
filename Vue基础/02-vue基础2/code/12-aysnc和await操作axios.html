@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <title>Document</title>
+</head>
+
+<body>
+  <div id="app">
+    <button @click="getAllHeroList()">get</button>
+    <button @click="postHero()">post</button>
+  </div>
+
+  <script src="lib/vue-2.5.16.js"></script>
+  <script src="lib/axios.min.js"></script>
+  <script>
+    // 配置全局请求根路径
+    axios.defaults.baseURL = 'http://127.0.0.1:5000';
+    // 把axios对象设置到Vue中
+    Vue.prototype.$http = axios;
+    var vm = new Vue({
+      el: "#app",
+      data: {
+
+      },
+      methods: {
+        async getAllHeroList() {
+          let { data: result } = await this.$http.get('/heroList');
+          console.log(result);
+        },
+        async postHero() {
+          let { data: result } = await this.$http.post('/addHero', { name: '卢兰', gender: '女', ctime: '2019-03-02 12:12:12' });
+          console.log(result);
+        }
+      }
+    })
+  </script>
+</body>
+
+</html>

@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <title>Document</title>
+  <style>
+    /* 动画1 */
+    /* 动画离开之前的状态 动画进入之后的状态  */
+    .v-leave,
+    .v-enter-to {
+      transform: translateX(0);
+    }
+
+    /* 动画离开之后的状态 动画进入之前的状态*/
+    .v-leave-to,
+    .v-enter {
+      transform: translateX(150px)
+    }
+
+    /* 动画运动期间的过渡效果设置 */
+    .v-leave-active,
+    .v-enter-active {
+      transition: all 0.5s;
+    }
+
+    /* 动画2 */
+    /* 动画离开之前的状态 动画进入之后的状态  */
+    .v2-leave,
+    .v2-enter-to {
+      transform: translateY(0);
+      opacity: 1;
+    }
+
+    /* 动画离开之后的状态 动画进入之前的状态*/
+    .v2-leave-to,
+    .v2-enter {
+      transform: translateY(150px);
+      opacity: 0;
+    }
+
+    /* 动画运动期间的过渡效果设置 */
+    .v2-leave-active,
+    .v2-enter-active {
+      transition: all 0.5s;
+    }
+  </style>
+</head>
+
+<body>
+  <div id="app">
+    <button @click="flag=!flag">toggle1</button>
+    <!-- 
+      transition标签，vue中提供但标签，用来实现动画。把要动画的元素嵌套在transition标签中。
+     -->
+    <transition>
+      <h2 v-show="flag">hello</h2>
+    </transition>
+    <button @click="flag2=!flag2">toggle2</button>
+    <!-- name属性可以区分动画，在定义类是把v改成name属性值 -->
+    <transition name="v2">
+      <h2 v-show="flag2">hello</h2>
+    </transition>
+  </div>
+
+  <script src="lib/vue-2.5.16.js"></script>
+  <script>
+    var vm = new Vue({
+      el: "#app",
+      data: {
+        flag: false,
+        flag2: false
+      },
+      methods: {
+
+      }
+    })
+  </script>
+</body>
+
+</html>

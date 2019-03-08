@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8">
+    <title>Document</title>
+  </head>
+  <body>
+    <div id="app">
+      firstName: <input type="text" v-model="first">
+      <br>
+      lastName: <input type="text" v-model="last">
+      <p>全名：{{fullName}}</p>
+    </div>
+
+    <script src="lib/vue-2.5.16.js"></script>
+    <script>
+      var vm = new Vue({
+        el:"#app",
+        data:{
+            first:'',
+            last:''
+        },
+        // computed可以计算属性
+        computed:{
+          // fullName 表示将来返回的值，而不是方法
+          fullName(){
+            return this.first + '.' + this.last;
+          }
+        }
+      })
+    </script>
+  </body>
+</html>

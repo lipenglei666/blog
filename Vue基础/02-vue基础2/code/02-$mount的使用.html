@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8">
+    <title>Document</title>
+  </head>
+  <body>
+    <div id="app">
+      {{msg}}
+    </div>
+
+    <script src="lib/vue-2.5.16.js"></script>
+    <script>
+      var vm = new Vue({
+        // el:"#app",
+        data:{
+          msg:'hello'
+        }
+      })
+      // 可以绑定要关联的view模块
+      // 注意：若对象内部通过el设置录view模块，则以el的设置为准。
+      vm.$mount('#app')
+    </script>
+  </body>
+</html>

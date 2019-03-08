@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8">
+    <title>Document</title>
+    <style>
+      .v-enter {
+        transform: translateX(80px);
+      }
+      .v-enter-active {
+        transform: translateX(180px);
+      }
+      .v-leave {
+        transform: translateX(80px)
+      }
+      .v-leave-active {
+        transform: translateX(180px)
+      }
+      h2 {
+        transition: all 0.2s;
+        transform: translateX(80px);
+      }
+    </style>
+  </head>
+  <body>
+    <div id="app">
+      <button @click="flag1=!flag1">动画1</button>
+      <transition>
+          <h2 v-show="flag1">哈哈哈</h2>
+      </transition>
+      <hr>
+      <button @click="flag2=!flag2">动画2</button>
+      <transition>
+          <h2 v-show="flag2">呵呵呵</h2>
+      </transition>
+    </div>
+
+    <script src="lib/vue-2.5.16.js"></script>
+    <script>
+      var vm = new Vue({
+        el:"#app",
+        data:{
+          flag1:true,
+          flag2:true
+        }
+      })
+    </script>
+  </body>
+</html>   

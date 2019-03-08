@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <title>Document</title>
+  <style>
+    .loading {
+      width: 200px;
+      height: 50px;
+      font-size: 14px;
+      background: green;
+      color: #fff;
+      text-align: center;
+      line-height: 50px;
+      margin: 50px auto;
+
+    }
+  </style>
+</head>
+
+<body>
+  <div id="app">
+    <button @click="getAllHeroList()">get</button>
+    <button @click="postHero()">post</button>
+    <div class="loading" v-show="flag">数据加载中......</div>
+  </div>
+
+  <script src="lib/vue-2.5.16.js"></script>
+  <script src="lib/axios.min.js"></script>
+  <script>
+    // 配置全局请求根路径
+    axios.defaults.baseURL = 'http://127.0.0.1:5000';
+    // 把axios对象设置到Vue中
+    Vue.prototype.$http = axios;
+    var vm = new Vue({
+      el: "#app",
+      // data和methods加载完毕后
+      created() {
+        // 注册一个请求拦截器
+        this.$http.interceptors.request.use((config) => {
+          // Do something before request is sent
+          this.flag = true;
+          return config;
+        });
+        // 注册一个响应拦截器
+        this.$http.interceptors.response.use((response) => {
+          // Do something with response data
+          this.flag = false;
+          return response;
+        });
+      },
+      data: {
+        flag: false
+      },
+      methods: {
+        async getAllHeroList() {
+          let { data: result } = await this.$http.get('/heroList');
+          console.log(result);
+        },
+        async postHero() {
+          let { data: result } = await this.$http.post('/addHero', { name: '卢兰', gender: '女', ctime: '2019-03-02 12:12:12' });
+          console.log(result);
+        }
+      }
+    })
+  </script>
+</body>
+
+</html>

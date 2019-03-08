@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8">
+    <title>Document</title>
+  </head>
+  <body>
+    <div id="app">
+      {{msg}}
+    </div>
+
+    <script src="lib/vue-2.5.16.js"></script>
+    <script>
+      var vm = new Vue({
+        el:"#app",
+        // 若使用了template属性，template指定的内容会替换el属性关联的模块
+        template:'<h1>{{msg}}</h1>',
+        data:{
+          msg:'hello'
+        }
+      })
+    </script>
+  </body>
+</html>

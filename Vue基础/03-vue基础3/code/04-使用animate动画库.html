@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <title>Document</title>
+  <link rel="stylesheet" href="lib/animate.css">
+</head>
+
+<body>
+  <div id="app">
+    <button @click="flag=!flag">toggle1</button>
+    <!-- 
+      transition标签，vue中提供但标签，用来实现动画。把要动画的元素嵌套在transition标签中。
+     -->
+    <transition enter-active-class="fadeInDown" leave-active-class="fadeOutDown">
+      <h2 v-show="flag" class="animated">hello</h2>
+    </transition>
+    <!-- 
+      动画库使用步骤：
+        1. 引入animate.css样式文件
+        2. 使用transition标签嵌套动画的元素
+        3. 给transition标签设置属性enter-active-class 设置动画进入
+        4. 给transition标签设置属性leave-active-class 设置动画离开
+        5. 给动画的元素设置animated类名
+     -->
+  </div>
+
+  <script src="lib/vue-2.5.16.js"></script>
+  <script>
+    var vm = new Vue({
+      el: "#app",
+      data: {
+        flag: false
+      },
+      methods: {
+
+      }
+    })
+  </script>
+</body>
+
+</html>

@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8">
+    <title>Document</title>
+  </head>
+  <body>
+    <div id="app">
+      <!-- {{数据|过滤器名称}} ；| 管道符-->
+      {{time|format}}
+    </div>
+
+    <script src="lib/vue-2.5.16.js"></script>
+    <script>
+      // 语法：Vue.filter('过滤器名称',处理程序)
+      // 注意：处理程序中的参数，就是管道左侧的数据
+      // 定义过滤器
+      Vue.filter('format',(time)=>{
+         let date = new Date(time);
+         let year = date.getFullYear();
+         let month = (date.getMonth() + 1).toString().padStart('2','0');
+         let day = date.getDate().toString().padStart('2','0');
+         let hours = date.getHours().toString().padStart('2','0');
+         let minutes = date.getMinutes().toString().padStart('2','0');
+         let seconds = date.getSeconds().toString().padStart('2','0');
+         
+         return `${year}年${month}月${day}日 ${hours}:${minutes}:${seconds}`;
+      })
+      var vm = new Vue({
+        el:"#app",
+        data:{
+          time:1550494434561
+        }
+      });
+      
+    </script>
+  </body>
+</html>

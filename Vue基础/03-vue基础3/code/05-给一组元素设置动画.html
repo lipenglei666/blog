@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8">
+    <title>Document</title>
+    <style>
+      * {
+        margin: 0;
+        padding: 0;
+      }
+      ul {
+        list-style: none;
+        margin-top: 10px;
+      }
+      li {
+        border:1px dashed #ccc;
+        padding:10px;
+        background:#aaa;
+        color:#fff;
+      }
+      .v-enter,.v-leave-to {
+        transform: translateY(150px);
+        opacity: 0;
+      }
+      .v-enter-to ,.v-leave{
+        transform: translateY(0);
+        opacity: 1;
+      }
+      .v-enter-active,.v-leave-active{
+        transition: all 0.5s;
+      }
+      .v-leave-active {
+        position: absolute;
+        width: 100%;
+      }
+      /* 后续动画 */
+      .v-move {
+        transition: all 0.5s;
+      }
+    </style>
+  </head>
+  <body>
+    <div id="app">
+      <input type="text" v-model="name">
+      <button @click="add()">添加</button>
+      <ul>
+        <!-- 
+          transition-group标签 可以为连续多个元素设置动画
+         -->
+        <transition-group>
+          <li  v-for="item in list" :key="item.id" @click="remove(item.id)">
+            {{item.id}}----{{item.name}};
+          </li>
+        </transition-group>
+      </ul>
+    </div>
+
+    <script src="lib/vue-2.5.16.js"></script>
+    <script>
+      var vm = new Vue({
+        el:"#app",
+        data:{
+          name:'',
+          list:[
+            {id:1,name:'百度'},
+            {id:2,name:'腾讯'},
+            {id:3,name:'阿里巴巴'}
+          ]
+        },
+        methods:{
+          add(){
+            this.list.push({id:this.list.length + 1,name:this.name});
+            this.name = '';
+          },
+          remove(id){
+            let i = this.list.findIndex(item=>item.id==id);
+            this.list.splice(i,1);
+          }
+        }
+      })
+    </script>
+  </body>
+</html>

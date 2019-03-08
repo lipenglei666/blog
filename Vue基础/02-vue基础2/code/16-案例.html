@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <title>Document</title>
+  <link rel="stylesheet" href="lib//bootstrap.css">
+</head>
+
+<body>
+  <div id="app">
+    <!-- 操作 -->
+    <div class="panel panel-success">
+      <div class="panel-heading">
+        <h3 class="panel-title">品牌管理</h3>
+      </div>
+      <div class="panel-body">
+
+
+        <form class="form-inline" role="form">
+
+          <div class="form-group" class="form-inline">
+            <label class="sr-only" for="">label</label>
+            <input type="text" v-model="name"   class="form-control" id="" placeholder="名称">
+            <input type="button" @click="add()" class="btn btn-primary" value="添加" />
+
+          </div>
+          <div class="form-group" class="form-inline">
+            <strong>请输入搜索内容：</strong>
+            <input v-model="keyWords" type="text" class="form-control" id="" placeholder="名称">
+          </div>
+
+
+
+
+        </form>
+
+
+      </div>
+    </div>
+    <!-- 表格 -->
+
+    <table class="table table-bordered table-hover">
+      <thead>
+        <tr>
+          <th>编号</th>
+          <th>品牌名称</th>
+          <th>创建时间</th>
+          <th>操作</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr v-for="item in newList" :key="item.id">
+          <td v-text="item.id"></td>
+          <td v-text="item.name"></td>
+          <td>{{item.ctime|dateFormat}}</td>
+          <td>
+            <a href="javascript:;" @click="remove(item.id)">删除</a>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+
+  </div>
+  <!-- 引入vue -->
+  <script src="lib/vue-2.5.16.js"></script>
+  <!-- 引入axios -->
+  <script src="lib/axios.min.js"></script>
+  <script>
+    axios.defaults.baseURL = 'http://www.liulongbin.top:3005/';
+    // 添加全局过滤器，格式化时间
+    Vue.filter('dateFormat', function (v) {
+      var date = new Date(v);
+      console.log(date)
+      var y = date.getFullYear();
+      var m = (date.getMonth() + 1).toString().padStart(2, '0');
+      var d = (date.getDate()).toString().padStart(2, '0');
+      var h = (date.getHours()).toString().padStart(2, '0');
+      var mm = (date.getMinutes()).toString().padStart(2, '0');
+      var ss = (date.getSeconds()).toString().padStart(2, '0');
+      var str = `${y}-${m}-${d} ${h}:${mm}:${ss}`;
+      return str;
+    });
+    // 给vue原型扩展方法
+    Vue.prototype.$http = axios;
+    // 创建vue实例
+    var vm = new Vue({
+      el: "#app",
+      data: {
+        list: [],
+        name: '',
+        keyWords:''
+      },
+      created: function () {
+        this.getprodlist();
+      },
+      methods: {
+        // 获取所有列表
+        getprodlist() {
+          this.$http.get('api/getprodlist').then(result => {
+            this.list = result.data.message;
+          })
+        },
+       
+        // 添加
+        async add() {
+          if (this.name.trim().length == 0) return alert('数据不能为空');
+          let { data: result } = await this.$http.post('api/addproduct', { name: this.name.trim() });
+          this.getprodlist();
+          this.name = '';
+        },
+        // 删除
+        async remove(id) {
+          // for (var i = 12944; i <= 14276; i++) {
+            let { data: result } = await this.$http.get('api/delproduct/' + id);
+            if (result.status == 0) {
+              this.getprodlist();
+            }
+          // }
+          
+          
+        },
+        // 搜索
+        // computed:{
+          
+        // }
+      }
+      ,
+      computed:{
+        newList(){
+          return this.list.filter(item=>{return item.name.indexOf(this.keyWords)!=-1});
+        }
+      },
+    })
+  </script>
+</body>
+
+</html>

@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8">
+    <title>Document</title>
+    <style>
+      [v-cloak] {
+        display: none;
+      }
+    </style>
+  </head>
+  <body>
+    <div id="app" v-cloak>
+      <button @click="getAllHeros()">get请求</button>
+      <button @click="addHero()">post请求添加英雄</button>
+      <ul>
+        <li v-for="item in heroList" :key="item.id">
+          姓名：{{item.name}} --- 年龄：{{item.gender}}
+        </li>
+      </ul>
+    </div>
+
+    <script src="lib/vue-2.5.16.js"></script>
+    <script src="lib/axios.min.js"></script>
+    <script>
+      // 为Vue的原型上拓展方法
+      Vue.prototype.$http = axios;
+      // 创建vue实例
+      var vm = new Vue({
+        el:"#app",
+        data:{
+          heroList:[]
+        },
+        methods:{
+          getAllHeros(){
+            this.$http.get('http://127.0.0.1:5000/heroList').then(result=>{
+              this.heroList = result.data.data;
+            })
+          },
+          addHero(){
+            this.$http.post('http://127.0.0.1:5000/addHero',{name:'洛克',gender:'男',ctime:'2019-02-27 11:01:11'}).then(result=>{
+              console.log(result);
+            });
+            // this.$http.post('http://www.liulongbin.top:3005/api/post',{name:'洛克',age:10}).then(result=>{
+            //   console.log(result);
+            // })
+          }
+        }
+        
+      })
+    </script>
+  </body>
+</html>

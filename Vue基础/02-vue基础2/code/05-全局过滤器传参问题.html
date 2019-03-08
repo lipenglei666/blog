@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <title>Document</title>
+</head>
+
+<body>
+  <div id="app">
+    <!-- {{数据|过滤器名称(参数)}} ；| 管道符-->
+    {{time|format(true)}}
+    <hr>
+    {{time|format}}
+    <!-- 过滤器可以使用在插值表达式 和 v-bind命令中 -->
+    <hr>
+    <h2 :title="time | format(true)">鼠标进入看时间</h2>
+    <!-- 数据可以经历多个过滤器处理 -->
+    <hr>
+    {{time|format(true)|addStr}}
+  </div>
+
+  <script src="lib/vue-2.5.16.js"></script>
+  <script>
+    // 语法：Vue.filter('过滤器名称',处理程序)
+    // 注意：处理程序中的第一个参数参数，就是管道左侧的数据。 第二个参数及以后的参数则是在调用过滤器中传入的参数
+    // 定义过滤器
+    Vue.filter('format', (time, isFull) => {
+      let date = new Date(time);
+      let year = date.getFullYear();
+      let month = (date.getMonth() + 1).toString().padStart('2', '0');
+      let day = date.getDate().toString().padStart('2', '0');
+      let hours = date.getHours().toString().padStart('2', '0');
+      let minutes = date.getMinutes().toString().padStart('2', '0');
+      let seconds = date.getSeconds().toString().padStart('2', '0');
+      if (isFull) {
+
+        return `${year}年${month}月${day}日 ${hours}:${minutes}:${seconds}`;
+      } else {
+
+        return `${year}年${month}月${day}日`;
+      }
+
+
+    })
+
+    // 定义过滤器
+    Vue.filter('addStr',(r)=>{
+      return r + '❤️的时间'
+    })
+
+    // 创建vue实例
+    var vm = new Vue({
+      el: "#app",
+      data: {
+        time: 1550494434561
+      }
+    });
+
+  </script>
+</body>
+
+</html>

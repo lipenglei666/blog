@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8">
+    <title>Document</title>
+  </head>
+  <body>
+    <div id="app">
+      {{user}}
+      <button @click="addProto">增加属性gender</button>
+    </div>
+
+
+    <script src="lib/vue-2.5.16.js"></script>
+    <script>
+      var vm = new Vue({
+        el:"#app",
+        data:{
+          user:{
+            name:'zs',
+            age:10
+          }
+        },
+        methods:{
+          addProto(){
+            // 对于对象中不存在的属性，若设置时，vm实例无法检测更新view
+            // 解决方案：可以使用 vm.$set(target,key,value) 解决。
+            // this.user.gender = '女'
+            this.$set(this.user,'gender','男');
+          }
+        }
+      })
+    </script>
+  </body>
+</html>
